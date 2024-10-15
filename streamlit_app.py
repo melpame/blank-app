@@ -17,16 +17,14 @@ if login_option == "Login Page 1":
 # Login Page 2: type="text"로 마스킹된 비밀번호 필드 사용
 elif login_option == "Login Page 2 with masking":
     st.subheader("Login with Text Field and Masking")
-    username = st.text_input("Username")
-    password = st.text_input("Password (Masked as Text)", type="default")  # 일반 텍스트 필드
-    if st.button("Login"):
-        st.write(f"Login 2 Submitted! Username: {username}, Password: {password}")
+    username = st.text_input("Username")  # 사용자 이름은 마스킹하지 않음
+    
+    # HTML로 비밀번호 입력 필드 생성 (CSS 적용을 위해)
+    password_html = '''
+    <input type="text" id="password_input" style="-webkit-text-security: disc;" placeholder="Password" />
+    '''
+    st.markdown(password_html, unsafe_allow_html=True)  # 비밀번호 필드에만 CSS 적용
 
-    # CSS를 이용한 마스킹 처리 (-webkit-text-security: disc 유사 효과)
-    st.markdown("""
-        <style>
-        input[type="text"] {
-            -webkit-text-security: disc;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+ 
+    if st.button("Login"):
+        st.write(f"Login 2 Submitted! Username: {username}, Password: [Masked]")
